@@ -3,7 +3,7 @@
     <name>compatible</name>
     <code>compatible</code>
     <id>compatible</id>
-    <version>2.0.0</version>
+    <version>1.0.0</version>
     <vqmver>2.5.1</vqmver>
     <author>Basheir Hassan</author>
 
@@ -294,7 +294,9 @@
 
 	        $this->load->model('setting/setting');
             $data['compatible_status'] = $this->config->get('module_compatible_status');
-             $data['rows_compatible_product'] = $this->model_catalog_product->getTagProduct($this->request->get['product_id']);
+            $data['compatible_title'] = $this->config->get('module_compatible_title');
+            $data['rows_compatible_product'] = $this->model_catalog_product->getTagProduct($this->request->get['product_id']);
+            $data['current_language_id']= $this->config->get('config_language_id');
             //================== compatible =============//
 
 			]]></add>
@@ -342,10 +344,19 @@
 
             {% if compatible_status %}
 
-               {% for key,val in rows_compatible_product %}
-
-                  <div><i class='fa fa-minus-circle'></i>{{val.title}} <input class="product_compatble_input" type='hidden' name='product_compatble[{{key}}]' value='{{key}}' /></div>
+            <br/>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">{{compatible_title[current_language_id]}}</h3>
+              </div>
+              <div class="panel-body">
+                   {% for key,val in rows_compatible_product %}
+                <a href="index.php?route=product/search&search={{val.title}}" class="badge badge-pill badge-light">{{val.title}}</a>
                 {% endfor %}
+              </div>
+            </div>
+
+
 
             {% endif %}
 
