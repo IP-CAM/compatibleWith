@@ -56,8 +56,8 @@ $_['compatible_text_help_tabe_home'] = 'وسوم';
 
 
 
-$_['compatible_text_help_succ'] = 'تم';
-$_['compatible_text_help_error'] = 'خطا';
+$_['compatible_text_help_succ'] = 'تمت العملية ';
+$_['compatible_text_help_error'] = 'لم تتم العملية  ';
 
 
 

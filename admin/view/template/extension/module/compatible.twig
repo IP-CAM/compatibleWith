@@ -101,7 +101,7 @@
                             {#                    بيانات المتاجر#}
 
                             <div class="container">
-                                <div id="alertJson" role="alert"></div>
+                                <div id="alertJson" class="alertJson" role="alert"></div>
 
 
 
@@ -137,15 +137,11 @@
                                     <div class="col-md-8">
 
                                         <blockquote>
-                                            <p>تساعدك هذه الاضافة على القيام بتنبيه عميلك انه هذا المنتج متوفر في متاجر  اخرى عندما تكون انت تبيع نفس المنتج في Amazon او سوق كوم  الخ….</p>
+                                            <p>تساعدك هذه الاضافة على القيام باضافة منتج متوافق مع منتج مثلا عند اضافة اكسسوار لايفون يكون متوافق مع ايفون8 وايفون 9….</p>
 
                                             <dl>
                                                 <dd>مهم : تاكد من تنظيف الكاش من لوحة التحكم </dd>
-                                                <dd>تاكد من تنشيط الاضافة من نفس صفحة الاضافة</dd>
-                                                <dd>قم باضافة المتاجر وبامكانك الاضافة لاحقا  كما بامكانك اضافة الرابط للمتجر الجديد عند تعديل المنتج</dd>
-                                                <dd>اضافة المتجر يدعم تعدد اللغات لديك فمثلا لو كان المتجر انكليزي + عربي ستظهر لك مربع لكل لغة ليتم عرضها للعميل</dd>
-                                                <strong>عند حذف اي متجر يتم حذف البيانات التابعه له مثلا عدد النقرات</strong>
-                                                <dd>يتم احتساب النقرات مرة واحد عن تحميل الصفحة والضغط على الزر لكل واحد</dd>
+
                                                 <dd>...</dd>
                                                 <dd>...</dd>
                                                 <dd>...</dd>
@@ -244,6 +240,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
+                    <div id="alertJson" class="alertJson" role="alert"></div>
+
+
                     <form>
                         {% for key,val in languages %}
 
@@ -274,6 +274,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div id="alertJson" class="alertJson" role="alert"></div>
+
                     <form>
                         {% for key,val in languages %}
 
@@ -517,7 +519,7 @@
             statClass = "alert-success";
         }
 
-        $('#alertJson').html(' <div class="alert alertStat '+statClass+'" role="alert">'+m+'</div>');
+        $('.alertJson').html(' <div class="alert alertStat '+statClass+'" role="alert">'+m+'</div>');
         $('.alertStat').delay(5000).fadeOut('slow');
 
     }
