@@ -67,7 +67,7 @@ class ModelExtensionModuleCompatible extends Model {
         $this->model_extension_module_compatible->getLanguages();
         $current_language_id =$this->config->get('config_language_id');
         $tags = $this->db->query( "SELECT * from `" . DB_PREFIX . "compatible_ref` as ref INNER JOIN " . DB_PREFIX . "compatible_tags as tag ON tag.id_ref=ref.id WHERE  `language_id` = '". $this->db->escape($current_language_id). "';" )->rows;
-
+        $allTags =array();
         foreach ($tags as $tag){
             $allTags[$tag['id_ref']]= array("title"=>$tag['title']) ;
         }
@@ -105,8 +105,10 @@ class ModelExtensionModuleCompatible extends Model {
 
 	public function deleteRef($id_ref) {
 
-		$this->db->query( "DELETE from `" . DB_PREFIX . "compatible_ref` WHERE  `id` = '". $this->db->escape($id_ref). "';" );
+
+		$this->db->query( "DELETE from `" . DB_PREFIX . "compatible_ref` WHERE  `id` = '". $this->db->escape($id_ref). "';" );;
 		$this->db->query( "DELETE from `" . DB_PREFIX . "compatible_tags` WHERE `id_ref` = '". $this->db->escape($id_ref). "';" );
+		$this->db->query( "DELETE from `" . DB_PREFIX . "compatible_product` WHERE `id_ref` = '". $this->db->escape($id_ref). "';" );
 
 		return  $this->db->countAffected();
 
@@ -153,6 +155,8 @@ public function getCountRef() {
         LEFT JOIN " . DB_PREFIX . "compatible_ref  as ref  ON pr.id_ref = ref.id 
         LEFT JOIN " . DB_PREFIX . "compatible_tags as tags ON ref.id = tags.id_ref  
         WHERE  tags.language_id = '". $this->db->escape($current_language_id). "' AND  pr.product_id = '". (int) $product_id. "';" )->rows;
+
+        $allTags =array();
 
         foreach ($tags as $tag){
             $allTags[$tag['id_ref']]= array("title"=>$tag['title']) ;

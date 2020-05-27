@@ -17,7 +17,7 @@
 				]]></search>
             <add position="after"><![CDATA[
 
-            <li><a href="#compatible_devices" data-toggle="tab">متوافق  </a></li>
+            <li><a href="#compatible_devices" data-toggle="tab">{{compatible_text_help_title_tap}}</a></li>
 				]]></add>
         </operation>
 
@@ -36,9 +36,9 @@
                   </thead>
                   <tbody>
                   <tr>
-                           <div class="input-group">
+                   <div class="input-group">
 
-			    <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">Add Tag</button>
+			    <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{compatible_text_help_title_add_tag}}</button>
 
 			</div>
 
@@ -47,10 +47,12 @@
 			<div id="product-compatble" class="well well-sm" style="height: 150px; overflow: auto;">
 
 
+                {% if rows_compatible_product %}
                 {% for key,val in rows_compatible_product %}
 
                   <div><i class='fa fa-minus-circle'></i>{{val.title}} <input class="product_compatble_input" type='hidden' name='product_compatble[{{key}}]' value='{{key}}' /></div>
                 {% endfor %}
+                {% endif %}
 
 
            </div>
@@ -149,13 +151,13 @@
 
             $('#addTagModal').modal('hide');
             $(".inputTagAdd").val("");
-            alertMessage("{{ text_help_succ }}", true);
+            alertMessage("{{ compatible_text_help_succ }}", true);
             $('#product-compatble').append('<div><i class="fa fa-minus-circle"></i> ' + title + '<input class="product_compatble_input" type="hidden" name="product_compatble[' + lastID + ']" value="' + lastID + '" /></div>');
             $('#product-compatble').append('<button data-key="' + lastID + '" type="button" class="btn btn-default btn-sm addComBtn">' + title + '</button>');
 
 
         }).fail(function () {
-            alertMessage("{{ text_help_error }}", false);
+            alertMessage("{{ compatible_text_help_error }}", false);
             $(".addTagBtn").button("reset");
         }).always(function () {
             $(".addTagBtn").button("reset");
@@ -213,7 +215,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_add_tag }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ compatible_text_help_add_tag }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -259,7 +261,7 @@
             //================== compatible =============//
 
         $this->load->model('extension/module/compatible');
-
+        $this->load->language('extension/module/compatible');
 
          if(isset($this->request->get['product_id'])){
             $product_id = (int)$this->request->get['product_id'];
@@ -287,11 +289,7 @@
             <add position="after"><![CDATA[
 
             //================== compatible =============//
-
-
-
            $this->load->model('catalog/product');
-
 	        $this->load->model('setting/setting');
             $data['compatible_status'] = $this->config->get('module_compatible_status');
             $data['compatible_title'] = $this->config->get('module_compatible_title');
@@ -319,6 +317,7 @@
                     LEFT JOIN " . DB_PREFIX . "compatible_ref  as ref  ON pr.id_ref = ref.id
                     LEFT JOIN " . DB_PREFIX . "compatible_tags as tags ON ref.id = tags.id_ref
                     WHERE  tags.language_id = '". $this->db->escape($current_language_id). "' AND  pr.product_id = '". (int) $product_id. "';" )->rows;
+                    $allTags =array();
 
                     foreach ($tags as $tag){
                         $allTags[$tag['id_ref']]= array("title"=>$tag['title']) ;

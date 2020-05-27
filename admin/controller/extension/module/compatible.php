@@ -17,7 +17,7 @@ class ControllerExtensionModuleCompatible extends Controller {
 
 
 
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('compatible_heading_title'));
 
 
 
@@ -25,7 +25,7 @@ class ControllerExtensionModuleCompatible extends Controller {
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('module_compatible', $this->request->post);
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = $this->language->get('compatible_text_success');
             $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true));
         }
 
@@ -40,12 +40,12 @@ class ControllerExtensionModuleCompatible extends Controller {
         );
 
         $data['breadcrumbs'][] = array(
-          'text' => $this->language->get('text_extension'),
+          'text' => $this->language->get('compatible_text_extension'),
           'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=module', true)
         );
 
         $data['breadcrumbs'][] = array(
-          'text' => $this->language->get('heading_title'),
+          'text' => $this->language->get('compatible_heading_title'),
           'href' => $this->url->link('extension/module/compatible', 'user_token=' . $this->session->data['user_token'], true)
         );
 
@@ -332,7 +332,7 @@ class ControllerExtensionModuleCompatible extends Controller {
     protected function validate() {
 
         if (!$this->user->hasPermission('modify', 'extension/module/compatible')) {
-            $this->error['warning'] = $this->language->get('error_permission');
+            $this->error['warning'] = $this->language->get('compatible_error_permission');
         }
 
         return !$this->error;

@@ -17,7 +17,7 @@
 
                 <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i
                             class="fa fa-reply"></i></a></div>
-            <h1>{{ heading_title }} V:{{ text_version }}</h1>
+            <h1>{{ compatible_heading_title }} V:{{ compatible_text_version }}</h1>
             <ul class="breadcrumb">
                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
                 <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb.text }}</a></li>
@@ -37,7 +37,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }} </h3>
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ compatible_text_edit }} </h3>
                 </div>
                 <div class="panel-body">
 
@@ -55,8 +55,8 @@
 
 
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#home">{{ text_help_tabe_home }}</a></li>
-                        <li><a data-toggle="tab" href="#tabHelp">{{ text_help_tabe_help }}</a></li>
+                        <li class="active"><a data-toggle="tab" href="#home">{{ compatible_text_help_tabe_home }}</a></li>
+                        <li><a data-toggle="tab" href="#tabHelp">{{ compatible_text_help_tabe_help }}</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -72,12 +72,12 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-12">
-                                                <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{ text_help_add_tag }}</button>
+                                                <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{ compatible_text_help_title_add_tag }}</button>
 
 
                                                 {% for key,val in languages %}
                                                     <div class="form-group">
-                                                        <label>{{ text_help_title_tag }}</label>
+                                                        <label>{{ compatible_text_help_title_tag }}</label>
                                                         <input type="text" name="module_compatible_title[{{ val.language_id }}]" class="form-control"  value="{{ module_compatible_title[val.language_id] }}" aria-describedby="emailHelp" placeholder="{{ val.code }}"/>
                                                     </div>
                                                 {% endfor %}
@@ -108,12 +108,12 @@
 
                                 <table id="tableDateTag" class="table table-bordered table-hover" style="width:100%">
                                     <thead>
-                                    <th>{{ text_row_id }}</th>
+                                    <th>{{ compatible_text_row_id }}</th>
                                     {% for key,val in languages %}
                                         <th>{{ val.code }}</th>
                                     {% endfor %}
-                                    <th>{{ text_row_date }}</th>
-                                    <th>{{ text_row_delete }}</th>
+                                    <th>{{ compatible_text_row_date }}</th>
+                                    <th>{{ compatible_text_row_delete }}</th>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
@@ -206,8 +206,8 @@
                     <hr>
 {#                    AAA -  {{ dump(module_compatible_status) }}#}
                     <div class="row">
-                        <label class="col-sm-2 control-label"
-                               for="input-module_hello_world_status">{{ entry_status }}</label>
+                        <label class="col-sm-2 control-label">{{ compatible_entry_status }}</label>
+
                         <div class="col-sm-10">
                             <select name="module_compatible_status" id="module_compatible_status" class="form-control">
 
@@ -238,7 +238,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_add_tag }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ compatible_text_help_add_tag }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -268,7 +268,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_edit_tag }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ compatible_text_help_edit_tag }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -322,7 +322,7 @@
         $(document).on("click","button.deleteRef",function(e) {
 
 
-            if (!confirm('{{ text_help_delete_messag_text }}')) {
+            if (!confirm('{{ compatible_text_help_delete_messag_text }}')) {
                 return ;
             }
 
@@ -432,11 +432,11 @@
            loadingTag();
             $('#addTagModal').modal('hide');
             $(".inputTagAdd").val("");
-            alertMessage( "{{ text_help_succ }}" ,true);
+            alertMessage( "{{ compatible_text_help_succ }}" ,true);
 
 
         }).fail(function() {
-            alertMessage( "{{ text_help_error }}" ,false);
+            alertMessage( "{{ compatible_text_help_error }}" ,false);
             $(".addTagBtn").button("reset");
         }).always(function() {
             $(".addTagBtn").button("reset");
@@ -451,18 +451,18 @@
         $.post("{{ update_tag }}", $( ".inputTagEdit" ).serialize(), function (data) {
 
             if (data.result == 1) {
-                alertMessage('{{ text_help_succ }}',true)
+                alertMessage('{{ compatible_text_help_succ }}',true)
 
                 loadingTag();
                 $('#editTagModal').modal('hide');
 
             } else {
-                alertMessage('{{ text_help_error }}')
+                alertMessage('{{ compatible_text_help_error }}')
             }
 
 
         }, 'json') .fail(function() {
-            alertMessage( "{{ text_help_error }}" ,false);
+            alertMessage( "{{ compatible_text_help_error }}" ,false);
             alert( "error" );
         })
             .always(function() {
