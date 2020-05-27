@@ -116,7 +116,7 @@ class ControllerExtensionModuleCompatible extends Controller {
 
         $this->db->query("CREATE TABLE IF NOT EXISTS `".DB_PREFIX ."compatible_product` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      `date` date NOT NULL,
                       `product_id` int(11) NOT NULL,
                       `id_ref` int(11) DEFAULT NULL,
                       PRIMARY KEY (`id`)
@@ -130,7 +130,7 @@ class ControllerExtensionModuleCompatible extends Controller {
                       `id_ref` int(4) DEFAULT NULL,
                       `language_id` int(3) NOT NULL,
                       `title` varchar(99) DEFAULT NULL,
-                      `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      `date` date NOT NULL,
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 
@@ -138,7 +138,7 @@ class ControllerExtensionModuleCompatible extends Controller {
 
           $this->db->query(	"CREATE TABLE IF NOT EXISTS `".DB_PREFIX ."compatible_ref` (
                       `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-                      `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      `date` date NOT NULL,
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 
