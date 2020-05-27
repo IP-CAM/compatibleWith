@@ -1,0 +1,517 @@
+
+{{ header }}
+{{ column_left }}
+
+
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+
+
+
+
+                <button type="submit" form="form_push" data-toggle="tooltip" title="{{ button_save }}"
+                        class="btn btn-primary"><i class="fa fa-save"></i></button>
+
+
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i
+                            class="fa fa-reply"></i></a></div>
+            <h1>{{ heading_title }} V:{{ text_version }}</h1>
+            <ul class="breadcrumb">
+                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+                <li><a href="{{ breadcrumb['href'] }}">{{ breadcrumb.text }}</a></li>
+                <?php } ?>
+            </ul>
+        </div>
+
+
+    </div>
+
+
+    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-push" class="form-horizontal">
+
+
+        <div class="container-fluid">
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }} </h3>
+                </div>
+                <div class="panel-body">
+
+                    <div id="status"></div>
+
+                    {% if error_no_key %}
+                        <div class="alert alert-danger" role="alert">{{ error_no_key }}</div>
+                    {% endif %}
+
+
+                    {% if error_no_chat_ids %}
+                        <div class="alert alert-danger" role="alert">{{ error_no_chat_ids }}</div>
+                    {% endif %}
+
+
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#home">{{ text_help_tabe_home }}</a></li>
+                        <li><a data-toggle="tab" href="#tabHelp">{{ text_help_tabe_help }}</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+
+
+
+                            <div class="container col-lg-12 col-md-12">
+
+
+                                <div class="container">
+                                    <div class="row">
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{ text_help_add_tag }}</button>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </div>
+
+
+
+                            {#                    بيانات المتاجر#}
+
+                            <div class="container">
+                                <div id="alertJson" role="alert"></div>
+
+
+
+
+                                <table id="tableDateTag" class="table table-bordered table-hover" style="width:100%">
+                                    <thead>
+                                    <th>{{ text_row_id }}</th>
+                                    {% for key,val in languages %}
+                                        <th>{{ val.code }}</th>
+                                    {% endfor %}
+                                    <th>{{ text_row_date }}</th>
+                                    <th>{{ text_row_delete }}</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                                <div class="border border-success" id="loadingMessage"><h3 class="text-center">Loading.....</h3></div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div id="tabHelp" class="tab-pane fade">
+
+
+
+
+                                <div class="row">
+                                    <div class="col-md-8">
+
+                                        <blockquote>
+                                            <p>تساعدك هذه الاضافة على القيام بتنبيه عميلك انه هذا المنتج متوفر في متاجر  اخرى عندما تكون انت تبيع نفس المنتج في Amazon او سوق كوم  الخ….</p>
+
+                                            <dl>
+                                                <dd>مهم : تاكد من تنظيف الكاش من لوحة التحكم </dd>
+                                                <dd>تاكد من تنشيط الاضافة من نفس صفحة الاضافة</dd>
+                                                <dd>قم باضافة المتاجر وبامكانك الاضافة لاحقا  كما بامكانك اضافة الرابط للمتجر الجديد عند تعديل المنتج</dd>
+                                                <dd>اضافة المتجر يدعم تعدد اللغات لديك فمثلا لو كان المتجر انكليزي + عربي ستظهر لك مربع لكل لغة ليتم عرضها للعميل</dd>
+                                                <strong>عند حذف اي متجر يتم حذف البيانات التابعه له مثلا عدد النقرات</strong>
+                                                <dd>يتم احتساب النقرات مرة واحد عن تحميل الصفحة والضغط على الزر لكل واحد</dd>
+                                                <dd>...</dd>
+                                                <dd>...</dd>
+                                                <dd>...</dd>
+                                                <dd>...</dd>
+                                                <dd>تابع الفيديو التعليمي اسفل هذه الصفحة</dd>
+                                            </dl>
+
+                                            <footer>هذه الاضافة مفتوحة المصدر لك الحرية باستخدامها <cite title="Source Title"></cite></footer>
+                                        </blockquote>
+
+
+
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-success">اللهم لا علم لنا إلا ما علمتنا ، إنك أنت العليم الحكيم، اللهم علمنا ما ينفعنا ، وانفعنا بما علمتنا ، وزدنا علما</li>
+                                            <li class="list-group-item text-right">
+                                                <span class="text-right">BasheirHassan</span>
+                                                <a href="https://twitter.com/basheirhassan?lang=en" target="_blank" class="twitter"><i class="fa fa-twitter fa-3x"></i></a>
+
+                                            </li>
+                                            <li class="list-group-item text-right">
+                                                <span class="text-right">BasheirHassan</span>
+                                                <a href="https://www.youtube.com/watch?v=-imlCMmdO-k&feature=emb_title" target="_blank" class="youtube"><i class="fa fa-youtube fa-3x"></i></a>
+                                            </li>
+
+                                              <li class="list-group-item text-right">
+                                                <span class="text-right">BasheirHassan</span>
+                                                <a href="https://github.com/BasheirHassan?tab=repositories" target="_blank" class="github"><i class="fa fa-github fa-3x"></i></a>
+                                            </li>
+
+
+
+                                        </ul>
+
+
+                                    </div>
+                                    <div class="col-md-12">
+
+                                        <iframe width="600" height="400" src="https://www.youtube.com/embed/-imlCMmdO-k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+                                    </div>
+                                </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                    <hr>
+{#                    AAA -  {{ dump(module_compatible_status) }}#}
+                    <div class="row">
+                        <label class="col-sm-2 control-label"
+                               for="input-module_hello_world_status">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="module_compatible_status" id="module_compatible_status" class="form-control">
+
+                                {% if module_compatible_status %}
+                                    <option value="1" selected>{{ text_enabled }}</option>
+                                    <option value="0">{{ text_disabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected>{{ text_disabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+
+
+
+
+    <div class="modal fade" id="addTagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_add_tag }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        {% for key,val in languages %}
+
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">{{ text_input_tag }} - {{ val.code }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" data-title="{{ val.code }}" data-language_id="{{ val.language_id }}" name="compatible_tag_title[{{val.language_id}}]" id="compatible_tag_title_add[{{val.language_id}}]"  value="" placeholder="{{ text_input_tag }}"class="form-control compatible inputTagAdd"/>
+
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button " class="btn btn-primary addTagBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editTagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_edit_tag }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        {% for key,val in languages %}
+
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">{{ text_input_tag }} - {{ val.code }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" data-title="{{ val.code }}" data-language_id="{{ val.language_id }}" name="compatible_tag_title[{{val.language_id}}]" id="compatible_tag_title_edit[{{val.language_id}}]"  value="" placeholder="{{ text_input_tag }}"class="form-control compatible inputTagEdit"/>
+
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                        <div class="form-group row invisible">
+                            <label for="colFormLabelSm"  class="col-sm-2 col-form-label col-form-label-sm">ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" data-language_id="{{ val.language_id }}" name="compatible_ref_id"  id="compatible_ref_id"   value="" class="form-control inputTagEdit"/>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button " class="btn btn-primary editTagBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+
+
+    var allDataJson = {};
+
+    $(document).ready(function () {
+
+           // getTagsUrl();
+           loadingTag();
+
+        // Delete Tag
+        $(document).on("click","button.deleteRef",function(e) {
+
+
+            if (!confirm('{{ text_help_delete_messag_text }}')) {
+                return ;
+            }
+
+
+            var btn = $(this);
+            var tr = $(this).closest('tr');
+            var idRef = tr.attr('data-refID');
+
+
+
+            $(btn).button('loading');
+
+                $.post("{{ delete_ref }}", {id_ref: idRef}, function (data) {
+                    $(btn).button('reset');
+                    $(btn).closest('tr').fadeOut("slow", function () {
+                    });
+                    if (data.result === 1) {
+                        $(btn).closest('tr').fadeOut("slow", function () {
+                        });
+                    }
+
+                }, 'json');
+
+        });
+
+
+        // Edit Tag
+        $(document).on("click","button.editTag",function(e) {
+
+
+            $('.inputTagEdit').val("");
+            var btn = $(this);
+            var tr = $(this).closest('tr');
+            var id = tr.attr('data-refID');
+            var dataKey = tr.attr('data-key');
+            var jsonName = allDataJson[dataKey].title;
+
+            $.each(jsonName, function( key, value ) {
+                $(this).val(jsonName[key]);
+                console.log(jsonName[key])
+
+                $("#compatible_tag_title_edit\\["+key+"\\]").val(jsonName[key]);
+
+
+            });
+
+
+            $("#compatible_ref_id").val(id);
+
+            $('#editTagModal').modal('show');
+
+        });
+
+
+        // Add Stor
+        $('#addTagModal').on('show.bs.modal', function (e) {
+
+            var trr = $(e).closest('tr');
+            var tagID   =   $(trr).data('tagID');
+            var tagName =   $(trr).find('.editName');
+            console.log(e.target);
+
+            $.each( tagName, function( key, value ) {
+                console.log($(value).data('tagname'))
+                $("#compatible_tag_title["+key+"]").val("ghghfghfgh");
+            });
+
+        })
+
+
+        $(".editTagBtn").on("click",function(e) {
+            updateTags();
+        });
+
+
+        $(".addTagBtn").on("click",function(e) {
+            addTag();
+        });
+
+
+    });
+
+
+    function addTag() {
+
+        var isSend = true;
+        $.each($(".inputTagAdd"),function( key, value ) {
+           if($(value).val().trim() ==""){
+               alert($(value).data('title'));
+               isSend =  false;
+           }
+        });
+
+
+        $("select#module_compatible_status option").each(function() {
+             this.selected = ($(this).val() == 1);
+        });
+
+
+        if (isSend === false){
+            return ;
+        }
+
+
+        $(".addTagBtn").button('loading');
+        $.post("{{ add_tag }}",$( ".inputTagAdd" ).serialize(), function (data) {
+           loadingTag();
+            $('#addTagModal').modal('hide');
+            $(".inputTagAdd").val("");
+            alertMessage( "{{ text_help_succ }}" ,true);
+
+
+        }).fail(function() {
+            alertMessage( "{{ text_help_error }}" ,false);
+            $(".addTagBtn").button("reset");
+        }).always(function() {
+            $(".addTagBtn").button("reset");
+        });
+
+
+    }
+    function updateTags() {
+
+
+        $(".editTagBtn").button("loading");
+        $.post("{{ update_tag }}", $( ".inputTagEdit" ).serialize(), function (data) {
+
+            if (data.result == 1) {
+                alertMessage('{{ text_help_succ }}',true)
+
+                loadingTag();
+                $('#editTagModal').modal('hide');
+
+            } else {
+                alertMessage('{{ text_help_error }}')
+            }
+
+
+        }, 'json') .fail(function() {
+            alertMessage( "{{ text_help_error }}" ,false);
+            alert( "error" );
+        })
+            .always(function() {
+                $(".editTagBtn").button("reset");
+        });
+    }
+    function addRowTagToTable(data,key) {
+
+        console.log(allDataJson);
+
+
+        $("#tableDateTag").find('tbody')
+                .append($('<tr data-refID="'+data.id_ref+'" data-key="'+key+'">')
+                .append($('<td>').text(data.id_ref))
+                {% for key, val in languages %}
+                .append($('<td class="editName"  data-tagName="'+data.title["{{ val.language_id }}"]+'"> ').text(data.title["{{ val.language_id }}"]))
+                {% endfor %}
+                .append($('<td>').text(data.date))
+                .append($('<td>').html('<button onclick="" type="button" class="btn btn-danger deleteRef" aria-label="Left Align"><span class="fa fa-trash-o" aria-hidden="true"></span></button> <button  type="button" class="btn btn-success editTag" aria-label="Left Align"><span class="fa fa-edit" aria-hidden="true"></span></button>')))
+
+    }
+    function loadingTag() {
+
+        $('#loadingMessage').show();
+        $('#tableDateTag').hide();
+        $('#tableDateTag tbody').empty();
+        $('.inputTag').val('');
+        allDataJson = {};
+
+
+
+        var btn = $(".add_tags").button('loading');
+
+        $.getJSON( "{{ get_tags_json }}", function( json ) {
+            $('#loadingMessage').hide();
+            $('#tableDateTag').show();
+            $(btn).button('reset');
+            allDataJson =json;
+            $.each(json,function( key, value ) {
+                addRowTagToTable(value,key);
+            });
+        });
+
+    }
+
+
+
+    function alertMessage(m,s) {
+        statClass = "alert-danger";
+
+        if (s){
+            statClass = "alert-success";
+        }
+
+        $('#alertJson').html(' <div class="alert alertStat '+statClass+'" role="alert">'+m+'</div>');
+        $('.alertStat').delay(5000).fadeOut('slow');
+
+    }
+
+
+</script>
+
+
+{{ footer }}

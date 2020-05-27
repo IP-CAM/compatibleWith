@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <name>compatible</name>
+    <code>compatible</code>
+    <id>compatible</id>
+    <version>2.0.0</version>
+    <vqmver>2.5.1</vqmver>
+    <author>Basheir Hassan</author>
+
+    <!--    admin Form-->
+
+    <file path="admin/view/template/catalog/product_form.twig">
+
+        <operation>
+            <search><![CDATA[
+              			<li><a href="#tab-design" data-toggle="tab">{{ tab_design }}</a></li>
+				]]></search>
+            <add position="after"><![CDATA[
+
+            <li><a href="#compatible_devices" data-toggle="tab">متوافق  </a></li>
+				]]></add>
+        </operation>
+
+
+        <operation>
+            <search><![CDATA[
+              			<div class="tab-pane" id="tab-design">
+				]]></search>
+            <add position="before"><![CDATA[
+
+       <div class="tab-pane" id="compatible_devices">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead>
+
+                  </thead>
+                  <tbody>
+                  <tr>
+                           <div class="input-group">
+
+			    <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">Add Tag</button>
+
+			</div>
+
+
+
+			<div id="product-compatble" class="well well-sm" style="height: 150px; overflow: auto;">
+
+
+                {% for key,val in rows_compatible_product %}
+
+                  <div><i class='fa fa-minus-circle'></i>{{val.title}} <input class="product_compatble_input" type='hidden' name='product_compatble[{{key}}]' value='{{key}}' /></div>
+                {% endfor %}
+
+
+           </div>
+                  </div>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+
+
+                <div class="btn-group" id="groupBtnComp" role="group" aria-label="...">
+
+                   {% for key,val in rows_compatible %}
+                            <button data-key="{{key}}" id="addComBtn" type="button" class="btn btn-default btn-sm addComBtn ">{{val.title}}</button>
+                  {% endfor %}
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+]]></add>
+        </operation>
+
+        <operation>
+            <search><![CDATA[{{ footer }}]]></search>
+            <add position="before"><![CDATA[
+		     // autocompleteCompatble
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+    checkIsIsset();
+    $('#product-compatble').on('click', '.fa-minus-circle', function () {
+        $(this).parent().remove();
+        checkIsIsset();
+    });
+
+
+    $(document).on('click', '.addComBtn', function () {
+        var key = $(this).data('key');
+        var title = $(this).text();
+
+
+        $('.product_compatble_input').find(item => item.id === key);
+
+        var searchValue = $.grep($('.product_compatble_input'), function (e) {
+            return $(e).val() == key;
+        });
+
+        console.log(searchValue);
+        if (searchValue.length === 0) {
+            $('#product-compatble').append('<div><i class="fa fa-minus-circle"></i> ' + title + '<input class="product_compatble_input" type="hidden" name="product_compatble[' + key + ']" value="' + key + '" /></div>');
+        } else {
+            $(searchValue).addClass('alert alert-danger');
+
+        }
+        checkIsIsset();
+
+    });
+
+
+    $(document).on('click', '.addTagBtn', function () {
+
+
+        var isSend = true;
+        $.each($(".inputTagAdd"), function (key, value) {
+            if ($(value).val().trim() == "") {
+                alert($(value).data('title'));
+                isSend = false;
+            }
+        });
+
+
+        $("select#module_compatible_status option").each(function () {
+            this.selected = ($(this).val() == 1);
+        });
+
+
+        if (isSend === false) {
+            return;
+        }
+
+
+        $(".addTagBtn").button('loading');
+        $.post("{{ add_tag }}", $(".inputTagAdd").serialize(), function (data) {
+
+            $('#addTagModal').modal('hide');
+            $(".inputTagAdd").val("");
+            alertMessage("{{ text_help_succ }}", true);
+            $('#product-compatble').append('<div><i class="fa fa-minus-circle"></i> ' + title + '<input class="product_compatble_input" type="hidden" name="product_compatble[' + lastID + ']" value="' + lastID + '" /></div>');
+            $('#product-compatble').append('<button data-key="' + lastID + '" type="button" class="btn btn-default btn-sm addComBtn">' + title + '</button>');
+
+
+        }).fail(function () {
+            alertMessage("{{ text_help_error }}", false);
+            $(".addTagBtn").button("reset");
+        }).always(function () {
+            $(".addTagBtn").button("reset");
+        });
+
+        checkIsIsset();
+
+    });
+ });
+
+     function checkIsIsset() {
+
+
+        var arr = $.map($('.product_compatble_input'), function (el) {
+            return el.value;
+        });
+
+        $(".addComBtn").each(function (index) {
+            var v = $(this).data('key').toString();
+
+            if (jQuery.inArray(v, arr)!='-1') {
+
+               $(this).addClass('fa fa-check');
+
+
+            } else {
+                $(this).removeClass('fa fa-check');
+            }
+
+
+
+        });
+    }
+
+
+
+
+
+
+
+        </script>
+
+
+			]]></add>
+        </operation>
+
+
+
+        <operation>
+            <search><![CDATA[{{ footer }} ]]></search>
+
+            <add position="before"><![CDATA[
+
+         <div class="modal fade" id="addTagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ text_help_add_tag }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        {% for key,val in languages %}
+
+                            <div class="form-group row">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">{{ text_input_tag }} - {{ val.code }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" data-title="{{ val.code }}" data-language_id="{{ val.language_id }}" name="compatible_tag_title[{{val.language_id}}]" id="compatible_tag_title_add[{{val.language_id}}]"  value="" placeholder="{{ text_input_tag }}"class="form-control compatible inputTagAdd"/>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button " class="btn btn-primary addTagBtn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+]]></add>
+        </operation>
+
+    </file>
+
+    <!--     get Stores-->
+    <file name="admin/controller/catalog/product.php">
+        <operation>
+            <search position="after"><![CDATA[protected function getForm() {]]></search>
+            <add><![CDATA[
+
+
+
+            //================== compatible =============//
+
+        $this->load->model('extension/module/compatible');
+
+
+         if(isset($this->request->get['product_id'])){
+            $product_id = (int)$this->request->get['product_id'];
+            $data['rows_compatible_product'] = $this->model_extension_module_compatible->getTagProduct($product_id);
+
+         }
+
+          $data['rows_compatible']    = $this->model_extension_module_compatible->getTags();
+          $data['add_tag']    = html_entity_decode($this->url->link('extension/module/compatible/addTag', 'user_token=' . $this->session->data['user_token'], 'SSL'));
+          $data['current_language_id']= $this->config->get('config_language_id');
+
+
+          //var_dump($data);
+
+           //================== compatible =============//
+
+
+            ]]></add>
+        </operation>
+    </file>
+    <!--     add Status-->
+    <file name="catalog/controller/product/product.php">
+        <operation>
+            <search><![CDATA[if ($product_info) {]]></search>
+            <add position="after"><![CDATA[
+
+            //================== compatible =============//
+
+
+
+           $this->load->model('catalog/product');
+
+	        $this->load->model('setting/setting');
+            $data['compatible_status'] = $this->config->get('module_compatible_status');
+             $data['rows_compatible_product'] = $this->model_catalog_product->getTagProduct($this->request->get['product_id']);
+            //================== compatible =============//
+
+			]]></add>
+        </operation>
+    </file>
+
+
+        <!--    Add function To model-->
+    <file name="catalog/model/catalog/product.php">
+        <operation>
+            <search><![CDATA[public function getTotalProductSpecials() {]]></search>
+            <add position="before"><![CDATA[
+
+            //================== compatible =============//
+
+           	public function getTagProduct($product_id) {
+
+                    $current_language_id =$this->config->get('config_language_id');
+                    $tags = $this->db->query( "SELECT pr.id_ref,ref.id,	tags.title from `" . DB_PREFIX . "compatible_product` as pr
+                    LEFT JOIN " . DB_PREFIX . "compatible_ref  as ref  ON pr.id_ref = ref.id
+                    LEFT JOIN " . DB_PREFIX . "compatible_tags as tags ON ref.id = tags.id_ref
+                    WHERE  tags.language_id = '". $this->db->escape($current_language_id). "' AND  pr.product_id = '". (int) $product_id. "';" )->rows;
+
+                    foreach ($tags as $tag){
+                        $allTags[$tag['id_ref']]= array("title"=>$tag['title']) ;
+                    }
+
+                    return $allTags;
+
+	        }
+
+
+            //================== compatible =============//
+
+			]]></add>
+        </operation>
+    </file>
+    <!--View Defualt-->
+    <file name="catalog/view/theme/*/template/product/product.twig">
+        <operation>
+            <search><![CDATA[<input type="hidden" name="product_id" value="{{ product_id }}" />]]></search>
+
+            <add position="before"><![CDATA[
+
+
+            {% if compatible_status %}
+
+               {% for key,val in rows_compatible_product %}
+
+                  <div><i class='fa fa-minus-circle'></i>{{val.title}} <input class="product_compatble_input" type='hidden' name='product_compatble[{{key}}]' value='{{key}}' /></div>
+                {% endfor %}
+
+            {% endif %}
+
+				]]></add>
+        </operation>
+    </file>
+
+
+
+
+
+</modification>
