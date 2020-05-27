@@ -73,6 +73,22 @@ class ControllerExtensionModuleCompatible extends Controller {
 
 
 
+        /*Admin Module title*/
+        if (isset($this->request->post['module_compatible_title'])) {
+            $data['module_compatible_title'] = $this->request->post['module_compatible_title'];
+        } elseif ($this->config->get('module_compatible_title')) {
+            $data['module_compatible_title'] = $this->config->get('module_compatible_title');
+        } else {
+            $data['module_compatible_title'] = 0;
+        }
+
+
+
+
+
+
+
+
 
         $data['header']      =      $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

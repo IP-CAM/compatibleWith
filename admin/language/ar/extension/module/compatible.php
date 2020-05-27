@@ -59,3 +59,8 @@ $_['text_help_tabe_home'] = 'وسوم';
 $_['text_help_succ'] = 'تم';
 $_['text_help_error'] = 'خطا';
 
+
+
+
+$_['text_help_title_tag'] = 'عنوان الوسم';
+

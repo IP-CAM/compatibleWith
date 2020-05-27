@@ -74,6 +74,18 @@
                                             <div class="col-sm-12">
                                                 <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{ text_help_add_tag }}</button>
 
+
+                                                {% for key,val in languages %}
+                                                    <div class="form-group">
+                                                        <label>{{ text_help_title_tag }}</label>
+                                                        <input type="text" name="module_compatible_title[{{ val.language_id }}]" class="form-control"  value="{{ module_compatible_title[val.language_id] }}" aria-describedby="emailHelp" placeholder="{{ val.code }}"/>
+                                                    </div>
+                                                {% endfor %}
+
+
+
+
+
                                             </div>
                                         </div>
 
