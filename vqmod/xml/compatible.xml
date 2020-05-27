@@ -151,13 +151,11 @@
 
             $('#addTagModal').modal('hide');
             $(".inputTagAdd").val("");
-            alertMessage("{{ compatible_text_help_succ }}", true);
-            $('#product-compatble').append('<div><i class="fa fa-minus-circle"></i> ' + title + '<input class="product_compatble_input" type="hidden" name="product_compatble[' + lastID + ']" value="' + lastID + '" /></div>');
-            $('#product-compatble').append('<button data-key="' + lastID + '" type="button" class="btn btn-default btn-sm addComBtn">' + title + '</button>');
+            $('#product-compatble').append('<div><i class="fa fa-minus-circle"></i> ' + data.title[{{current_language_id}}] + '<input class="product_compatble_input" type="hidden" name="product_compatble[' + data.lastID + ']" value="' + data.lastID + '" /></div>');
+            $('#groupBtnComp').append('<button data-key="' + data.lastID + '" type="button" class="btn btn-default btn-sm addComBtn">' + data.title[{{current_language_id}}] + '</button>');
 
 
         }).fail(function () {
-            alertMessage("{{ compatible_text_help_error }}", false);
             $(".addTagBtn").button("reset");
         }).always(function () {
             $(".addTagBtn").button("reset");
@@ -289,12 +287,13 @@
             <add position="after"><![CDATA[
 
             //================== compatible =============//
-           $this->load->model('catalog/product');
+            $this->load->model('catalog/product');
 	        $this->load->model('setting/setting');
             $data['compatible_status'] = $this->config->get('module_compatible_status');
             $data['compatible_title'] = $this->config->get('module_compatible_title');
             $data['rows_compatible_product'] = $this->model_catalog_product->getTagProduct($this->request->get['product_id']);
             $data['current_language_id']= $this->config->get('config_language_id');
+
             //================== compatible =============//
 
 			]]></add>
