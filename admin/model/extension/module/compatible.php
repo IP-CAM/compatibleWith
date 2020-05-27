@@ -19,6 +19,20 @@ class ModelExtensionModuleCompatible extends Model {
 
 
     public function addTag($tag) {
+
+       
+        $issetTitle = $this->checkIssetTag($tag);
+
+        if(count($issetTitle)>0 ){
+          return array(
+            'result'=>false,
+            'error'=>$issetTitle,
+            'lastID'=>0
+            );
+
+        }
+
+
         $lastID = $this->addRef();
 
         if ($lastID) {
@@ -30,11 +44,29 @@ class ModelExtensionModuleCompatible extends Model {
                   .$this->db->escape($value)."')");
 
             }
+        }
+
+        return array(
+          'result'=>true,
+          'error'=>null,
+          'lastID'=>$lastID
+        );
+
+    }
+
+
+    public function checkIssetTag($tags){
+
+        $issetTitle = array();
+        foreach ($tags['compatible_tag_title'] as $language_id => $value) {
+            $result = $this->db->query( "SELECT * from `" . DB_PREFIX . "compatible_tags`  WHERE `title` = '". $this->db->escape($value). " ' ;" )->rows;
+            if($this->db->countAffected()){
+                $issetTitle[] = $language_id  ;
+            }
 
         }
 
-        return $lastID;
-
+        return $issetTitle;
 
     }
 

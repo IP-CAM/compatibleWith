@@ -79,8 +79,20 @@ class ControllerExtensionModuleCompatible extends Controller {
         } elseif ($this->config->get('module_compatible_title')) {
             $data['module_compatible_title'] = $this->config->get('module_compatible_title');
         } else {
-            $data['module_compatible_title'] = 0;
+            $data['module_compatible_title'] = '';
         }
+
+
+
+        if (isset($this->error['error_title'])) {
+            $data['error_title'] = $this->error['error_title'];
+        } else {
+            $data['error_title'] = '';
+        }
+
+
+
+
 
 
 
@@ -163,24 +175,18 @@ class ControllerExtensionModuleCompatible extends Controller {
 
     public function addTag() {
 
-
-
-
         $result = false;
         if ( isset( $this->request->post['compatible_tag_title'] ) ) {
-
             $this->load->model('extension/module/compatible');
-            $query = $this->model_extension_module_compatible->addTag($this->request->post);
-
-            $result = $this->db->countAffected();
-
+            $result = $this->model_extension_module_compatible->addTag($this->request->post);
         }
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode([
-          'result' => $result,
+          'result' => $result['result'],
+          'error' => $result['error'],
           'title'   => $this->request->post['compatible_tag_title'],
-          'lastID'   => $query,
+          'lastID'   => $result['lastID'],
         ]));
 
 
@@ -334,6 +340,19 @@ class ControllerExtensionModuleCompatible extends Controller {
         if (!$this->user->hasPermission('modify', 'extension/module/compatible')) {
             $this->error['warning'] = $this->language->get('compatible_error_permission');
         }
+
+        foreach ($this->request->post['module_compatible_title'] as $key=>$title){
+
+            if (empty($title)) {
+                $this->error['error_title']
+                  = $this->language->get('compatible_text_help_error_title');
+            }
+
+        }
+
+
+//        var_dump($this->error);
+
 
         return !$this->error;
     }

@@ -43,16 +43,6 @@
 
                     <div id="status"></div>
 
-                    {% if error_no_key %}
-                        <div class="alert alert-danger" role="alert">{{ error_no_key }}</div>
-                    {% endif %}
-
-
-                    {% if error_no_chat_ids %}
-                        <div class="alert alert-danger" role="alert">{{ error_no_chat_ids }}</div>
-                    {% endif %}
-
-
 
                     <ul class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" href="#home">{{ compatible_text_help_tabe_home }}</a></li>
@@ -70,14 +60,25 @@
                                 <div class="container">
                                     <div class="row">
 
+
+
+
+
+
+
+
                                         <div class="form-group row">
                                             <div class="col-sm-12">
                                                 <button type="button" id="addTag" class="btn btn-primary" data-toggle="modal" data-target="#addTagModal" data-whatever="addtag">{{ compatible_text_help_title_add_tag }}</button>
 
 
+                                                {% if error_title %}
+                                                    <div class="alert alert-danger" role="alert">{{ error_title }}</div>
+                                                {% endif %}
                                                 {% for key,val in languages %}
+
                                                     <div class="form-group">
-                                                        <label>{{ compatible_text_help_title_tag }}</label>
+                                                        <label>{{ val.code }} - {{ compatible_text_help_title_tag }} </label>
                                                         <input type="text" name="module_compatible_title[{{ val.language_id }}]" class="form-control"  value="{{ module_compatible_title[val.language_id] }}" aria-describedby="emailHelp" placeholder="{{ val.code }}"/>
                                                     </div>
                                                 {% endfor %}
@@ -431,10 +432,20 @@
 
         $(".addTagBtn").button('loading');
         $.post("{{ add_tag }}",$( ".inputTagAdd" ).serialize(), function (data) {
-           loadingTag();
-            $('#addTagModal').modal('hide');
-            $(".inputTagAdd").val("");
-            alertMessage( "{{ compatible_text_help_succ }}" ,true);
+
+
+            if(data.result===true){
+                loadingTag();
+                $('#addTagModal').modal('hide');
+                $(".inputTagAdd").val("");
+                alertMessage( "{{ compatible_text_help_succ }}" ,true);
+            }else{
+
+                $.each(data.error,function( key, value ) {
+                    $('<span class="label label-warning">{{ compatible_text_help_error_title_isset }}</span>').insertBefore("[name='compatible_tag_title["+value+"]").delay(5000).fadeOut('slow');;
+                });
+            }
+
 
 
         }).fail(function() {
@@ -514,11 +525,9 @@
 
     function alertMessage(m,s) {
         statClass = "alert-danger";
-
         if (s){
             statClass = "alert-success";
         }
-
         $('.alertJson').html(' <div class="alert alertStat '+statClass+'" role="alert">'+m+'</div>');
         $('.alertStat').delay(5000).fadeOut('slow');
 

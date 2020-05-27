@@ -10,7 +10,7 @@ $_['compatible_text_version'] = '1.0.0';
 
 // Heading
 $_['heading_title'] = 'Compatible Withe';
-$_['compatible_heading_title'] = 'Compatible Withe - Compatible with';
+$_['compatible_heading_title'] = 'Compatible with';
 $_['compatible_header_customer_message'] = 'User Settings';
 
 
@@ -59,6 +59,8 @@ $_['compatible_text_help_tabe_home'] = 'Tags';
 
 $_['compatible_text_help_succ'] = 'Done!';
 $_['compatible_text_help_error'] = 'error!';
+$_['compatible_text_help_error_title'] = 'Pleas Add !';
+$_['compatible_text_help_error_title_isset'] = 'tag isset';
 
 
 
