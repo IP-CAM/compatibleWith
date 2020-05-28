@@ -9,7 +9,7 @@
 
     <!--    admin Form-->
 
-    <file path="admin/view/template/catalog/product_form.twig">
+    <file name="admin/view/template/catalog/product_form.twig">
 
         <operation>
             <search><![CDATA[

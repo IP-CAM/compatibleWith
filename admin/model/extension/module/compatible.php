@@ -20,7 +20,7 @@ class ModelExtensionModuleCompatible extends Model {
 
     public function addTag($tag) {
 
-       
+
         $issetTitle = $this->checkIssetTag($tag);
 
         if(count($issetTitle)>0 ){
@@ -162,8 +162,8 @@ public function getCountRef() {
     public function addTagProduct($product_id,$data) {
 
         foreach ($data['product_compatble'] as $key => $product) {
-            $this->db->query("INSERT INTO ".DB_PREFIX."compatible_product (`product_id`,`id_ref`) 
-                              VALUES ('".$this->db->escape($product_id)."','" .$this->db->escape($key)."')");
+            $this->db->query("INSERT INTO ".DB_PREFIX."compatible_product (`product_id`,`id_ref`,`date`) 
+                              VALUES ('".$this->db->escape($product_id)."','" .$this->db->escape($key)."',NOW())");
 
         }
 
