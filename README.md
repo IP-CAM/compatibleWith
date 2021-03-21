@@ -1,12 +1,6 @@
 # compatibleWith
-
-
-ضافة اكسسوار لايفون يكون متوافق مع ايفون8 وايفون 9….
-مهم : تاكد من تنظيف الكاش من لوحة التحكم
-
-
-**التعليمات**
-
-
+Add access to iPhone is compatible with iPhone 8 and iPhone 9 ....
+Important: Make sure to clean the cache from the control panel
+**Instructions** 
 
 https://youtu.be/MicZiDMSmnA
